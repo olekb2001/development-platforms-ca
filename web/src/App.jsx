@@ -26,7 +26,6 @@ export default function App() {
     console.log("Logging out...");
     await supabase.auth.signOut();
   };
-
   return (
     <div className="app-container">
       <nav className="navbar">

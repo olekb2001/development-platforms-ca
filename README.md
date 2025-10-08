@@ -113,7 +113,6 @@ web/
 
 5. Log out
    - Feed is still visible, but form disappears.
-
 6. Delete own article
    - Log back in as the same user.
    - Delete button is visible only on own articles.

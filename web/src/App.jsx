@@ -1,41 +1,58 @@
-// src/App.jsx
-import { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
-import './App.css';
+import { useEffect, useState } from "react";
+import { supabase } from "./supabaseClient";
+import Auth from "./Auth";
+import Articles from "./Articles";
+import "./index.css";
 
-function App() {
-  const [articles, setArticles] = useState([]);
-  const [error, setError] = useState(null);
+export default function App() {
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
-    const fetchArticles = async () => {
-      const { data, error } = await supabase.from('articles').select('*');
-      if (error) {
-        setError(error.message);
-        console.error('Error fetching articles:', error);
-      } else {
-        setArticles(data);
-      }
-    };
+    supabase.auth.getSession().then(({ data }) => {
+      console.log("Initial session:", data.session);
+      setSession(data.session);
+    });
 
-    fetchArticles();
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        console.log("Auth state changed:", _event, session);
+        setSession(session);
+      }
+    );
+    return () => listener.subscription.unsubscribe();
   }, []);
 
+  const handleLogout = async () => {
+    console.log("Logging out...");
+    await supabase.auth.signOut();
+  };
+
   return (
-    <div>
-      <h1>News Platform</h1>
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      <ul>
-        {articles.map((article) => (
-          <li key={article.id}>
-            <h3>{article.title}</h3>
-            <p>{article.body}</p>
-            <small>Category: {article.category}</small>
-          </li>
-        ))}
-      </ul>
+    <div className="app-container">
+      <nav className="navbar">
+        <span className="logo">News Platform</span>
+        <ul>
+          {session && (
+            <li className="logout-link" onClick={handleLogout}>
+              Logout
+            </li>
+          )}
+        </ul>
+      </nav>
+
+      <h1>Welcome to the News Platform</h1>
+
+      {!session ? (
+        <>
+          <Auth />
+          <Articles session={session} />
+        </>
+      ) : (
+        <>
+          <p>You are logged in as {session.user.email}</p>
+          <Articles session={session} />
+        </>
+      )}
     </div>
   );
 }
-
-export default App;

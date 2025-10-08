@@ -1,5 +1,5 @@
 /* ===== Global Reset ===== */
-body {
+html, body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: linear-gradient(135deg, #0f0f0f, #1e1e1e);
@@ -8,8 +8,9 @@ body {
   display: flex;
   justify-content: center;
   padding: 40px 20px;
+  max-width: 100%;
+  overflow-x: hidden; 
 }
-
 
 .app-container {
   width: 100%;
@@ -19,9 +20,10 @@ body {
   padding: 30px;
   box-shadow: 0 0 40px rgba(255, 0, 0, 0.25);
   border: 1px solid #2a2a2a;
+  box-sizing: border-box; 
 }
 
-
+/* ===== Navbar ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -32,6 +34,7 @@ body {
   border-radius: 10px;
   margin-bottom: 25px;
   backdrop-filter: blur(6px);
+  flex-wrap: wrap; 
 }
 
 .navbar .logo {
@@ -45,10 +48,8 @@ body {
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
 }
 
-
-
 .navbar ul {
-  list-style: none;  
+  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -64,7 +65,7 @@ body {
   color: #fff;
 }
 
-
+/* ===== Headings ===== */
 h1, h2 {
   margin-top: 0;
   text-align: center;
@@ -84,7 +85,7 @@ h2 {
   margin-bottom: 15px;
 }
 
-
+/* ===== Forms ===== */
 form {
   display: flex;
   flex-direction: column;
@@ -101,6 +102,7 @@ textarea {
   background: #121212;
   color: #eaeaea;
   transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; 
 }
 
 input:focus,
@@ -115,7 +117,7 @@ textarea {
   min-height: 90px;
 }
 
-
+/* ===== Buttons ===== */
 button {
   padding: 12px 18px;
   border: none;
@@ -146,6 +148,7 @@ button:hover {
   box-shadow: 0 4px 10px rgba(255, 76, 76, 0.4);
 }
 
+/* ===== Articles ===== */
 .article-list {
   list-style: none;
   padding: 0;
@@ -159,9 +162,8 @@ button:hover {
   margin-bottom: 20px;
   background: #222;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-
   text-align: center;
+  box-sizing: border-box;
 }
 
 .article-card:hover {
@@ -184,7 +186,7 @@ button:hover {
   color: #aaa;
 }
 
-
+/* ===== Category Badge ===== */
 .category-badge {
   display: inline-block;
   background: linear-gradient(90deg, #ff4c4c, #b71c1c);
@@ -192,13 +194,13 @@ button:hover {
   font-size: 0.75rem;
   font-weight: bold;
   padding: 4px 10px;
-  border-radius: 999px; 
+  border-radius: 999px;
   margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-
+/* ===== Images ===== */
 .article-image {
   display: flex;
   justify-content: center;
@@ -207,13 +209,12 @@ button:hover {
 }
 
 .article-image img {
-  max-width: 90%;
-  max-height: 220px;
+  max-width: 100%; 
+  height: auto;
   border-radius: 10px;
   border: 1px solid #444;
   object-fit: contain;
 }
-
 
 .note {
   font-style: italic;
@@ -222,24 +223,7 @@ button:hover {
   text-align: center;
 }
 
-
-@media (max-width: 768px) {
-  body {
-    padding: 20px;
-  }
-
-  .app-container {
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-}
+/* ===== Delete Button ===== */
 .delete-btn {
   margin-top: 10px;
   background: linear-gradient(90deg, #ff1744, #d50000);
@@ -258,3 +242,50 @@ button:hover {
   box-shadow: 0 4px 10px rgba(255, 23, 68, 0.4);
 }
 
+/* ===== Responsive Tweaks ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .app-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  form input,
+  form textarea,
+  form button {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 900px) {
+  .article-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
